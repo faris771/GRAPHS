@@ -86,7 +86,7 @@ int main() {
     adj['e'] = {};
     adj['f'] = {};
 
-    dfs2(adj, 'a');
+    dfs(adj, 'a');
 
 
     return 0;
