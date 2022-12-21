@@ -69,29 +69,19 @@ void dfs(umap<char, vector<char>> &adj, char src) {
         }
 
 
-
-
     }
 }
 
 
-void dfs2(umap<char, vector<char>> &adj, char src) {
-    stack<char> stk;
-    stk.push(src);
-    while (!stk.empty()) {
-        char current = stk.top();
-        cout << current << " ";
-        stk.pop();
-        for (char z: adj[current]) {
-            stk.push(z);
+void dfs_rec(umap<char, vector<char>> &adj, char src) {
 
-        }
+    cout << src << " ";
+    for (char x: adj[src]) {
+        dfs_rec(adj, x);
+
     }
 
-
 }
-
-
 
 int main() {
 //    FAST_AF
@@ -104,7 +94,12 @@ int main() {
     adj['e'] = {};
     adj['f'] = {};
 
-    dfs2(adj, 'a');
+
+    dfs_rec(adj, 'a');
+
+    cout << "2" << el;
+
+    dfs(adj, 'a');
 
 
     return 0;
