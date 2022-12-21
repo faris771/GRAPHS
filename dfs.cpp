@@ -75,6 +75,18 @@ void dfs(umap<char, vector<char>> &adj, char src) {
 }
 
 
+
+void dfs_rec(umap<char, vector<char>> &adj, char src) {
+
+    cout << src << " ";
+    for (char x: adj[src]) {
+        dfs_rec(adj, x);
+
+    }
+
+}
+
+
 int main() {
 //    FAST_AF
 
