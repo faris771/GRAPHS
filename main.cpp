@@ -52,55 +52,82 @@ const int N = 2e5 + 1;
 
 
 
+
+
 void dfs(umap<char, vector<char>> &adj, char src) {
 
-    stack<char> stk;
-    stk.push(src);
-    while (!stk.empty()) {
-        char current = stk.top();
+    cout << src << " ";
+    for (char x: adj[src]) {
+        dfs(adj, x);
 
-        cout << stk.top() << " ";
-        stk.pop();
+    }
 
+}
 
-        for (char z: adj[current]) {
-            stk.push(z);
+bool has_path(umap<char, vector<char>> &adj, char src, char target) {
+    if (src == target) {
+        return true;
+    }
+
+    for (char x: adj[src]) {
+        if (has_path(adj, x, target)) {
+            return true;
+        }
+    }
+
+    return false;
+
+}
+
+bool bfs_has_path(umap<char, vector<char>> &adj, char src, char target) {
+    queue<char> q;
+    q.push(src);
+    while (!q.empty()) {
+        char current = q.front();
+        if (current == target) {
+            return true;
+        }
+        q.pop();
+
+        for (char x: adj[current]) {
+            q.push(x);
 
         }
 
 
     }
+
+    return false;
 }
 
-
-void dfs_rec(umap<char, vector<char>> &adj, char src) {
-
-    cout << src << " ";
-    for (char x: adj[src]) {
-        dfs_rec(adj, x);
-
-    }
-
-}
 
 int main() {
 //    FAST_AF
 
     umap<char, vector<char>> adj;
-    adj['a'] = {'b', 'c'};
-    adj['b'] = {'d'};
-    adj['c'] = {'e'};
-    adj['d'] = {'f'};
-    adj['e'] = {};
-    adj['f'] = {};
+    adj['f'] = {'g', 'i'};
+    adj['g'] = {'h'};
+    adj['h'] = {};
+    adj['i'] = {'g', 'k'};
+    adj['j'] = {'i'};
+    adj['k'] = {};
 
+    char src;
+    char dest;
+//    while (true) {
+//        cout << "enter" << el;
+//        cin >> src >> dest;
+//
+//        cout << has_path(adj, src, dest) << el;
+//
+//    }
+    while (true) {
+        cout << "enter" << el;
+        cin >> src >> dest;
 
-    dfs_rec(adj, 'a');
+        cout << bfs_has_path(adj, src, dest) << el;
 
-    cout << "2" << el;
-
-    dfs(adj, 'a');
-
+    }
 
     return 0;
 }

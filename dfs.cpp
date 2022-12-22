@@ -80,7 +80,7 @@ void dfs_rec(umap<char, vector<char>> &adj, char src) {
 
     cout << src << " ";
     for (char x: adj[src]) {
-        dfs_rec(adj, x);
+        dfs(adj, x);
 
     }
 
@@ -105,6 +105,25 @@ void dfs_int(vector<int> adj[], int src) {
 
 
 }
+
+// ====================================================
+// has path
+
+bool dfs_has_path(umap<char, vector<char>> &adj, char src, char target) {
+    if (src == target) {
+        return true;
+    }
+
+    for (char x: adj[src]) {
+        if (dfs_has_path(adj, x, target)) {
+            return true;
+        }
+    }
+
+    return false;
+
+}
+
 
 // ====================================================
 

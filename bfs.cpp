@@ -57,6 +57,26 @@ void bfs(umap<char, vector<char>> &adj, char src) {
 
 }
 
+bool bfs_has_path(umap<char, vector<char>> &adj, char src, char target) {
+    queue<char> q;
+    q.push(src);
+    while (!q.empty()) {
+        char current = q.front();
+        q.pop();
+
+        for (char x: adj[current]) {
+            q.push(x);
+            if (x == target) {
+                return true;
+            }
+        }
+
+
+    }
+
+    return false;
+}
+
 
 
 int main() {
