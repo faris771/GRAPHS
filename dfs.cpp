@@ -87,18 +87,51 @@ void dfs_rec(umap<char, vector<char>> &adj, char src) {
 }
 
 
+// ====================================================
+    // dfs ex 7.13 
+bool visited[6] = {false};
+void dfs_int(vector<int> adj[], int src) {
+
+    if (visited[src]) { return; }
+
+    cout << src << " ";
+    visited[src] = true;
+
+    for (auto x: adj[src]) {
+
+        dfs_int(adj, x);
+
+    }
+
+
+}
+
+// ====================================================
+
+
 int main() {
 //    FAST_AF
 
-    umap<char, vector<char>> adj;
-    adj['a'] = {'b', 'c'};
-    adj['b'] = {'d'};
-    adj['c'] = {'e'};
-    adj['d'] = {'f'};
-    adj['e'] = {};
-    adj['f'] = {};
+    //ex 7.13 
+    vector<int> adj[6];
+    adj[1] = {2, 4};
+    adj[2] = {3,5};
+    adj[3] = {5};
+    adj[5] = {2};
+    adj[4] = {};
 
-    dfs(adj, 'a');
+    dfs_int(adj, 1);
+    
+    
+//     umap<char, vector<char>> adj;
+//     adj['a'] = {'b', 'c'};
+//     adj['b'] = {'d'};
+//     adj['c'] = {'e'};
+//     adj['d'] = {'f'};
+//     adj['e'] = {};
+//     adj['f'] = {};
+
+//     dfs(adj, 'a');
 
 
     return 0;
