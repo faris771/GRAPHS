@@ -25,6 +25,7 @@ typedef string String;
 #define S second
 #define null NULL
 #define umap unordered_map
+#define  uset unordered_set
 #define prioq priority_queue
 #define heap priority_queue
 #define min_heap     priority_queue <int, vector<int>, greater<int> >
@@ -38,96 +39,73 @@ typedef string String;
 
 const long double PI = atan(1) * 4.0;
 const int N = 2e5 + 1;
-//
-//void dfs(int node, vector<int> adj[], vector<bool> &visited, vector<int> &ans) {
-//    visited[node] = true;
-//    for (int i = 0; i < adj[node].size(); i++) {
-//        if (!visited[adj[node][i]]) {
-//            dfs(adj[node][i], adj, visited, ans);
+
+
+umap<char, vector<char>> buildGraph(vector<pair<char, char>> edges) {
+    umap<char, vector<char>> adj;
+    for (auto edge: edges) {
+//        pair<char, char> pr = edge;
+        char a = edge.F;
+        char b = edge.S;
+//        if (adj.count(a) == 0) {
+//            adj[a] = {};
 //        }
-//    }
-//    ans.push_back(node);
-//}
-
-
-
-
-
-
-void dfs(umap<char, vector<char>> &adj, char src) {
-
-    cout << src << " ";
-    for (char x: adj[src]) {
-        dfs(adj, x);
+//        if (adj.count(b) == 0) {
+//            adj[b] = {};
+//        }
+        adj[a].push_back(b);
+        adj[b].push_back(a);
 
     }
 
+
+    return adj;
 }
 
-bool has_path(umap<char, vector<char>> &adj, char src, char target) {
-    if (src == target) {
+bool has_path(umap<char, vector<char>> &adj, char src, char dst, uset<char> visited) {
+    if(src == dst) {
         return true;
     }
-
+    if(visited.insert(src).second == 0) { // already visited
+        return false;
+    }
+    visited.insert(src);
     for (char x: adj[src]) {
-        if (has_path(adj, x, target)) {
-            return true;
+        if (has_path(adj, x, dst, visited)) {
+            return  true;
         }
-    }
-
-    return false;
-
-}
-
-bool bfs_has_path(umap<char, vector<char>> &adj, char src, char target) {
-    queue<char> q;
-    q.push(src);
-    while (!q.empty()) {
-        char current = q.front();
-        if (current == target) {
-            return true;
-        }
-        q.pop();
-
-        for (char x: adj[current]) {
-            q.push(x);
-
-        }
-
 
     }
 
+
+
     return false;
 }
+
 
 
 int main() {
 //    FAST_AF
 
-    umap<char, vector<char>> adj;
-    adj['f'] = {'g', 'i'};
-    adj['g'] = {'h'};
-    adj['h'] = {};
-    adj['i'] = {'g', 'k'};
-    adj['j'] = {'i'};
-    adj['k'] = {};
+    vector<pair<char, char>> edges{
+            {'i', 'j'},
+            {'k', 'i'},
+            {'m', 'k'},
+            {'k', 'l'},
+            {'o', 'n'}
+    };
 
-    char src;
-    char dest;
-//    while (true) {
-//        cout << "enter" << el;
-//        cin >> src >> dest;
+    auto adj = buildGraph(edges);
+//    for (auto x: ans) {
+//        cout << x.F << " : ";
+//        for (auto y : x.S) {
+//            cout << y << " ";
 //
-//        cout << has_path(adj, src, dest) << el;
-//
+//        }
+//        cout << el;
 //    }
-    while (true) {
-        cout << "enter" << el;
-        cin >> src >> dest;
-
-        cout << bfs_has_path(adj, src, dest) << el;
-
-    }
+    uset<char> st;
+    cout << has_path(adj, 'i', 'n', st) << el;
 
     return 0;
 }
